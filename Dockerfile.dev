@@ -1,0 +1,11 @@
+FROM node:alpine
+
+WORKDIR /online-job-portal-frontend-master
+
+COPY ./package.json /online-job-portal-frontend-master
+
+RUN npm install
+
+COPY . /online-job-portal-frontend-master
+
+CMD ["npm" ""]

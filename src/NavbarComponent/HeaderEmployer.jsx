@@ -1,61 +1,43 @@
-import { Link, useNavigate } from "react-router-dom";
-import {  toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useAuthContext } from "../context";
 
 const HeaderEmployer = () => {
-  let navigate = useNavigate();
-
-  const userLogout = () => {
-    toast.success("logged out!!!", {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    sessionStorage.removeItem("active-employer");
-    sessionStorage.removeItem("employer-jwtToken");
-    window.location.reload(true);
-    setTimeout(() => {
-      navigate("/home");
-    }, 2000); // Redirect after 3 seconds
-  };
+  const { logoutHandler } = useAuthContext();
 
   return (
-    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
-      <li class="nav-item">
-        <Link
+    <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
+      <li className="nav-item">
+        <NavLink
           to="/employer/job/post"
-          class="nav-link active"
-          aria-current="page"
+          className="nav-link"
+          activeClassName="active"
         >
-          <b className="text-color">Add Job</b>
-        </Link>
+          Add Job
+        </NavLink>
       </li>
-
-      <li class="nav-item">
-        <Link
+      <li className="nav-item">
+        <NavLink
           to="/employer/job/all"
-          class="nav-link active"
-          aria-current="page"
+          className="nav-link"
+          activeClassName="active"
         >
-          <b className="text-color">My Jobs</b>
-        </Link>
+          My Jobs
+        </NavLink>
       </li>
 
-      <li class="nav-item">
-        <Link
+      <li className="nav-item">
+        <NavLink
           to="/employer/job/application/all"
-          class="nav-link active"
-          aria-current="page"
+          className="nav-link"
+          activeClassName="active"
         >
-          <b className="text-color">Job Applications</b>
-        </Link>
+          Job Applications
+        </NavLink>
       </li>
 
-      <li class="nav-item">
-        <button className="btn-main" onClick={userLogout}>
+      <li className="nav-item">
+        <button className="btn btn-primary rounded-pill" onClick={logoutHandler}>
           Logout
         </button>
       </li>

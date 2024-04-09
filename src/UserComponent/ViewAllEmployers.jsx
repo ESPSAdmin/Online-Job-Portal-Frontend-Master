@@ -4,7 +4,7 @@ import React from "react";
 
 const ViewAllEmployers = () => {
   const [allEmployer, setAllEmployer] = useState([]);
-  const admin_jwtToken = sessionStorage.getItem("admin-jwtToken");
+  const admin_jwtToken = sessionStorage.getItem("jwtToken");
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -38,68 +38,34 @@ const ViewAllEmployers = () => {
   };
 
   return (
-    <div className="mt-3">
-      <div
-        className="card form-card ms-2 me-2 mb-5 shadow-lg"
-        style={{
-          height: "45rem",
-        }}
-      >
-        <div
-          className="card-header custom-bg-text text-center bg-color"
-          style={{
-            borderRadius: "1em",
-            height: "50px",
-          }}
-        >
-          <h2>All Employers</h2>
+    <div className="container-fluid">
+      <div className="container-fluid">
+        <div className="row pt-3">
+          <h5>All Employers</h5>
         </div>
-        <div
-          className="card-body"
-          style={{
-            overflowY: "auto",
-          }}
-        >
-          <div className="table-responsive">
-            <table className="table table-hover text-color text-center">
-              <thead className="table-bordered border-color bg-color custom-bg-text">
+        <div>
+          <div className="table">
+            <table className="table">
+              <thead className="bg-secondary-subtle">
                 <tr>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Email Id</th>
-                  <th scope="col">Phone No</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Registration Date</th>
+                  <th scope="col" className="semi-bold">Name</th>
+                  <th scope="col" className="semi-bold">Role</th>
+                  <th scope="col" className="semi-bold">Email Id</th>
+                  <th scope="col" className="semi-bold">Phone No</th>
+                  <th scope="col" className="semi-bold">Address</th>
+                  <th scope="col" className="semi-bold">Registration Date</th>
                 </tr>
               </thead>
               <tbody>
                 {allEmployer.map((employer) => {
                   return (
                     <tr>
-                      <td>
-                        <b>{employer.firstName}</b>
-                      </td>
-                      <td>
-                        <b>{employer.lastName}</b>
-                      </td>
-                      <td>
-                        <b>{employer.emailId}</b>
-                      </td>
-                      <td>
-                        <b>{employer.phoneNo}</b>
-                      </td>
-                      <td>
-                        <b>
-                          {employer.address.street +
-                            ", " +
-                            employer.address.city +
-                            ", " +
-                            employer.address.pincode}
-                        </b>
-                      </td>
-                      <td>
-                        <b>{formatDateFromEpoch(employer.registrationDate)}</b>
-                      </td>
+                      <td className="text-sm">{employer.firstName} {employer.lastName}</td>
+                      <td className="text-sm">{employer.role}</td>
+                      <td className="text-sm">{employer.emailId}</td>
+                      <td className="text-sm">{employer.phoneNo}</td>
+                      <td className="text-sm">{employer.address.street +", " + employer.address.city + ", " + employer.address.pincode}</td>
+                      <td className="text-sm">{formatDateFromEpoch(employer.registrationDate)}</td>
                     </tr>
                   );
                 })}

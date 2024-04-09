@@ -1,32 +1,32 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const NormalHeader = () => {
   const navigate = useNavigate();
+
   return (
-    <ul class="navbar-nav ms-auto mb-2  me-5">
-      <li class="nav-item">
-        <Link
+    <ul className="navbar-nav ms-auto gap-3 align-items-center">
+      <li className="nav-item">
+        <NavLink
           to="/user/employer/register"
-          class="nav-link active"
-          aria-current="page"
+          className="nav-link text-dark"
+          activeClassName="active"
         >
           Register Employer
-        </Link>
+        </NavLink>
       </li>
-
-      <li class="nav-item">
-        <Link
+      <li className="nav-item">
+        <NavLink
           to="/user/employee/register"
-          class="nav-link active"
-          aria-current="page"
+          className="nav-link text-dark"
+          activeClassName="active"
         >
           Register Employee
-        </Link>
+        </NavLink>
       </li>
 
-      <li class="nav-item">
+      <li className="nav-item">
         <button
-          className="btn-main fw-bold"
+          className="btn btn-primary rounded-pill px-4"
           onClick={() => navigate("/user/login")}
         >
           Login

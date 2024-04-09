@@ -2,12 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import { Button, Modal } from "react-bootstrap";
-
 const ViewAllJobApplication = () => {
-  const admin = JSON.parse(sessionStorage.getItem("active-admin"));
-  const admin_jwtToken = sessionStorage.getItem("admin-jwtToken");
+  const admin = sessionStorage.getItem("active-admin");
+  const admin_jwtToken = sessionStorage.getItem("jwtToken");
 
   const [applications, setApplications] = useState([
     {

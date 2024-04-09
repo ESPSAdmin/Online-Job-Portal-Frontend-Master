@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const AddJobForm = () => {
@@ -12,6 +12,7 @@ const AddJobForm = () => {
 
   const employer = JSON.parse(sessionStorage.getItem("active-employer"));
   const employer_jwtToken = sessionStorage.getItem("employer-jwtToken");
+  console.log(employer.id)
 
   let navigate = useNavigate();
 
@@ -95,6 +96,7 @@ const AddJobForm = () => {
     state: "",
     country: "",
   });
+ 
 
   const handleInput = (e) => {
     setJob({ ...job, [e.target.name]: e.target.value });
@@ -103,15 +105,7 @@ const AddJobForm = () => {
   const saveJob = (e) => {
     e.preventDefault();
     if (job === null) {
-      toast.error("invalid input!!!", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error("invalid input!!!");
 
       return;
     }
@@ -142,42 +136,17 @@ const AddJobForm = () => {
         let response = resp.data;
 
         if (response.success) {
-          toast.success(response.responseMessage, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-
+          toast.success(response.responseMessage);
           setTimeout(() => {
             navigate("/home");
           }, 2000); // Redirect after 3 seconds
         } else if (!response.success) {
-          toast.error(response.responseMessage, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.error(response.responseMessage);
           setTimeout(() => {
             window.location.reload(true);
           }, 2000); // Redirect after 3 seconds
         } else {
-          toast.error("It Seems Server is down!!!", {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.error("It Seems Server is down!!!");
           setTimeout(() => {
             window.location.reload(true);
           }, 2000); // Redirect after 3 seconds
@@ -185,15 +154,7 @@ const AddJobForm = () => {
       })
       .catch((error) => {
         console.error(error);
-        toast.error("It seems server is down", {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error("It seems server is down");
         setTimeout(() => {
           window.location.reload(true);
         }, 2000); // Redirect after 3 seconds
@@ -201,85 +162,38 @@ const AddJobForm = () => {
   };
 
   return (
-    <div>
-      <div class="mt-2 d-flex aligns-items-center justify-content-center mb-4">
-        <div class="card form-card shadow-lg" style={{ width: "60rem" }}>
-          <div className="container-fluid">
-            <div
-              className="card-header bg-color custom-bg-text mt-2 text-center"
-              style={{
-                borderRadius: "1em",
-                height: "45px",
-              }}
-            >
-              <h5 class="card-title">Add Job</h5>
-            </div>
-            <div class="card-body text-color">
-              <form className="row g-3">
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="title" className="form-label">
-                    <b>Job Title</b>
-                  </label>
+    <div className="container-fluid">
+      <div className="row justify-content-center">
+        <div className="col-lg-11">
+          <h3 className="card-title py-3">Add Job</h3>
+          <form className="row g-3">
+                <div className="col-md-4 mb-3">
+                  <label htmlFor="title" className="semi-bold"> Job Title <sup className="text-danger fw-bold">*</sup></label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-input"
                     id="title"
                     name="title"
                     onChange={handleInput}
                     value={job.title}
                   />
                 </div>
-
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">
-                    <b>Company Name</b>
-                  </label>
+                <div className="col-md-4 mb-3">
+                  <label className="semi-bold">Company Name <sup className="text-danger fw-bold">*</sup></label>
                   <input
                     type="text"
-                    className="form-control"
+                    className="form-input"
                     name="companyName"
                     onChange={handleInput}
                     value={job.companyName}
                   />
                 </div>
-
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="description" className="form-label">
-                    <b>Job Description</b>
-                  </label>
-                  <textarea
-                    className="form-control"
-                    id="description"
-                    name="description"
-                    rows="2"
-                    onChange={handleInput}
-                    value={job.description}
-                  />
-                </div>
-
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="description" className="form-label">
-                    <b>Skills Required</b>
-                  </label>
-                  <textarea
-                    className="form-control"
-                    id="description"
-                    name="requiredSkills"
-                    rows="2"
-                    onChange={handleInput}
-                    value={job.requiredSkills}
-                  />
-                </div>
-
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">
-                    <b>Job Category</b>
-                  </label>
-
+                <div className="col-md-4 mb-3">
+                  <label className="semi-bold">Job Category <sup className="text-danger fw-bold">*</sup></label>
                   <select
                     name="jobCategoryId"
                     onChange={handleInput}
-                    className="form-control"
+                    className="form-input"
                   >
                     <option value="">Select Job Category</option>
 
@@ -290,12 +204,10 @@ const AddJobForm = () => {
                     })}
                   </select>
                 </div>
-
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">
-                    <b>Job Type</b>
+                <div className="col-md-4 mb-3">
+                  <label className="semi-bold">
+                    Job Type <sup className="text-danger fw-bold">*</sup>
                   </label>
-
                   <select
                     name="jobType"
                     onChange={handleInput}
@@ -309,11 +221,10 @@ const AddJobForm = () => {
                   </select>
                 </div>
 
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">
-                    <b>Salary Range</b>
+                <div className="col-md-4 mb-3">
+                  <label className="semi-bold">
+                    Salary Range <sup className="text-danger fw-bold">*</sup>
                   </label>
-
                   <select
                     name="salaryRange"
                     onChange={handleInput}
@@ -326,10 +237,9 @@ const AddJobForm = () => {
                     })}
                   </select>
                 </div>
-
-                <div className="col-md-6 mb-3">
-                  <label className="form-label">
-                    <b>Experience Required</b>
+                <div className="col-md-4 mb-3">
+                  <label className="semi-bold">
+                    Experience Required <sup className="text-danger fw-bold">*</sup>
                   </label>
 
                   <select
@@ -344,11 +254,10 @@ const AddJobForm = () => {
                     })}
                   </select>
                 </div>
-
                 {/* Address Fields */}
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="street" className="form-label">
-                    <b>Street</b>
+                <div className="col-md-4 mb-3">
+                  <label htmlFor="street" className="semi-bold">
+                    Street <sup className="text-danger fw-bold">*</sup>
                   </label>
                   <input
                     type="text"
@@ -359,10 +268,9 @@ const AddJobForm = () => {
                     value={job.street}
                   />
                 </div>
-
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="city" className="form-label">
-                    <b>City</b>
+                <div className="col-md-4 mb-3">
+                  <label htmlFor="city" className="semi-bold">
+                    City <sup className="text-danger fw-bold">*</sup>
                   </label>
                   <input
                     type="text"
@@ -374,9 +282,9 @@ const AddJobForm = () => {
                   />
                 </div>
 
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="pincode" className="form-label">
-                    <b>Pincode</b>
+                <div className="col-md-4 mb-3">
+                  <label htmlFor="pincode" className="semi-bold">
+                    Pincode <sup className="text-danger fw-bold">*</sup>
                   </label>
                   <input
                     type="text"
@@ -387,10 +295,9 @@ const AddJobForm = () => {
                     value={job.pincode}
                   />
                 </div>
-
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="state" className="form-label">
-                    <b>State</b>
+                <div className="col-md-4 mb-3">
+                  <label htmlFor="state" className="semi-bold">
+                    State <sup className="text-danger fw-bold">*</sup>
                   </label>
                   <input
                     type="text"
@@ -402,9 +309,9 @@ const AddJobForm = () => {
                   />
                 </div>
 
-                <div className="col-md-6 mb-3">
-                  <label htmlFor="country" className="form-label">
-                    <b>Country</b>
+                <div className="col-md-4 mb-3">
+                  <label htmlFor="country" className="semi-bold">
+                    Country <sup className="text-danger fw-bold">*</sup>
                   </label>
                   <input
                     type="text"
@@ -415,13 +322,12 @@ const AddJobForm = () => {
                     value={job.country}
                   />
                 </div>
-
-                <div className="col-md-6 mb-3">
-                  <label for="formFile" class="form-label">
-                    <b> Select Company Logo</b>
+                <div className="col-md-4 mb-3">
+                  <label for="formFile" className="semi-bold">
+                    Select Company Logo <sup className="text-danger fw-bold">*</sup>
                   </label>
                   <input
-                    class="form-control"
+                    className="form-control"
                     type="file"
                     id="formFile"
                     name="companyLogo"
@@ -429,19 +335,43 @@ const AddJobForm = () => {
                     required
                   />
                 </div>
+                <div className="col-md-12 mb-3">
+                  <label htmlFor="description" className="semi-bold">
+                    Skills Required <sup className="text-danger fw-bold">*</sup>
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    name="requiredSkills"
+                    rows="2"
+                    onChange={handleInput}
+                    value={job.requiredSkills}
+                  />
+                </div>
+                <div className="col-md-12 mb-3">
+                  <label htmlFor="description" className="semi-bold">
+                  Job Description <sup className="text-danger fw-bold">*</sup>
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    name="description"
+                    rows="2"
+                    onChange={handleInput}
+                    value={job.description}
+                  />
+                </div>
 
                 <div className="d-flex aligns-items-center justify-content-center mb-2">
                   <button
                     type="submit"
-                    class="btn bg-color custom-bg-text"
+                    className="btn bg-color custom-bg-text"
                     onClick={saveJob}
                   >
                     Post Job
                   </button>
                 </div>
               </form>
-            </div>
-          </div>
         </div>
       </div>
     </div>

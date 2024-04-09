@@ -1,5 +1,6 @@
 import { JobDetailPage } from "../JobComponent";
-import { AboutUs, ContactUs, HomePage, Home } from "../PageComponent";
+import { AboutUs, ContactUs, AllJobs } from "../PageComponent";
+import { ForgotPassword } from "../popupModals";
 
 const contentRoutes =[
     {
@@ -11,16 +12,12 @@ const contentRoutes =[
       element : <ContactUs />
     },
     {
-      path : '/home',
-      element : <HomePage/>
-    },
-    {
       path : '/job/:jobId/detail',
       element : <JobDetailPage/>
     },
     {
-      path : '/home',
-      element : <Home/>
+      path : '/jobs',
+      element : <AllJobs/>
     },
 ];
 

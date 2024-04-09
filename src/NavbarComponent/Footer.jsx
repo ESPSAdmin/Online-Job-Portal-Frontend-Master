@@ -22,7 +22,7 @@ const Footer = () => {
                 <div className="col-lg-2 col-md-6 col-4 mb-4 mb-md-0">
                   <ul className="nav flex-column list-unstyled mb-0">
                     <li className="nav-item">
-                      <a href="#!" className="text-color nav-link">
+                      <a href="/aboutus" className="text-color nav-link">
                         About Us
                       </a>
                     </li>
@@ -101,8 +101,8 @@ const Footer = () => {
             <section className="">
               <p className="d-flex justify-content-center align-items-center">
                 <span className="me-3 text-color">Login from here</span>
-                <Link to="/user/login" className="active">
-                  <button type="button" className="btn-main">
+                <Link to="/user/login">
+                  <button type="button" className="btn btn-primary rounded-pill">
                     Log in
                   </button>
                 </Link>

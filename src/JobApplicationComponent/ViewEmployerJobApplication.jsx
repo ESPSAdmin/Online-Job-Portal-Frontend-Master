@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { Button, Modal } from "react-bootstrap";
 
 const ViewEmployerJobApplication = () => {
   const employer = JSON.parse(sessionStorage.getItem("active-employer"));
-  const employer_jwtToken = sessionStorage.getItem("employer-jwtToken");
+  const employer_jwtToken = sessionStorage.getItem("jwtToken");
 
   const [assignApplicationId, setAssignApplicationId] = useState("");
   const [applicationStatus, setApplicationStatus] = useState("");
@@ -107,7 +107,6 @@ const ViewEmployerJobApplication = () => {
   const [applicationStatuses, setApplicationStatuses] = useState([]);
 
   const updateApplicationStatus = (applicationId) => {
-    console.log("Application Id :" + applicationId);
     setAssignApplicationId(applicationId);
     handleShow();
   };
@@ -116,6 +115,7 @@ const ViewEmployerJobApplication = () => {
       "http://localhost:8080/api/helper/job/application/status/fetch/all"
     );
     return response.data;
+
   };
 
   useEffect(() => {
@@ -153,7 +153,7 @@ const ViewEmployerJobApplication = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          //    Authorization: "Bearer " + jwtToken,
+             Authorization: "Bearer " + employer_jwtToken,
         },
         body: JSON.stringify(putData),
       })
@@ -244,7 +244,8 @@ const ViewEmployerJobApplication = () => {
         },
       }
     );
-    console.log(response.data);
+    console.log(response);
+    console.log("this is " , employer.id )
     return response.data;
   };
 
@@ -260,31 +261,15 @@ const ViewEmployerJobApplication = () => {
   };
 
   return (
-    <div className="mt-3">
-      <div
-        className="card form-card ms-2 me-2 mb-5 shadow-lg"
-        style={{
-          height: "45rem",
-        }}
-      >
-        <div
-          className="card-header custom-bg-text text-center bg-color"
-          style={{
-            borderRadius: "1em",
-            height: "50px",
-          }}
-        >
+    <div className="container-fluid">
+      <div className="container-sm">
+        <div className="row py-4">
           <h2>All Job Applications</h2>
         </div>
-        <div
-          className="card-body"
-          style={{
-            overflowY: "auto",
-          }}
-        >
+        <div className="card-body">
           <div className="table-responsive">
-            <table className="table table-hover text-color text-center">
-              <thead className="table-bordered border-color bg-color custom-bg-text">
+            <table className="table">
+              <thead>
                 <tr>
                   <th scope="col">Company Name</th>
                   <th scope="col">Company</th>
@@ -375,7 +360,6 @@ const ViewEmployerJobApplication = () => {
                                 >
                                   Update Status
                                 </button>
-                                <ToastContainer />
                               </div>
                             );
                           }
@@ -432,7 +416,6 @@ const ViewEmployerJobApplication = () => {
                 >
                   Update Status
                 </button>
-                <ToastContainer />
               </div>
             </form>
           </div>

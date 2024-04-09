@@ -1,28 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../context";
 
 const HeaderEmployee = () => {
+  const {logoutHandler} = useAuthContext();
   let navigate = useNavigate();
 
-  const employee = JSON.parse(sessionStorage.getItem("active-employee"));
-
-  const userLogout = () => {
-    toast.success("logged out!!!", {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    sessionStorage.removeItem("active-employee");
-    sessionStorage.removeItem("employee-jwtToken");
-    window.location.reload(true);
-    setTimeout(() => {
-      navigate("/home");
-    }, 2000); // Redirect after 3 seconds
-  };
+  const employee = sessionStorage.getItem("active-employee");
 
   const viewEmployeeProfile = () => {
     navigate("/employee/profile/detail", { state: employee });
@@ -33,7 +17,7 @@ const HeaderEmployee = () => {
       <li class="nav-item">
         <Link
           to="/employee/job/application/all"
-          class="nav-link active"
+          class="nav-link text-uppercase"
           aria-current="page"
         >
           Applied Jobs
@@ -41,7 +25,7 @@ const HeaderEmployee = () => {
       </li>
 
       <li class="nav-item">
-        <div class="nav-link text-dark" aria-current="page">
+        <div class="nav-link text-dark text-uppercase" aria-current="page">
           <span className="text-color" onClick={viewEmployeeProfile}>
             My Profile
           </span>
@@ -49,7 +33,7 @@ const HeaderEmployee = () => {
       </li>
 
       <li class="nav-item">
-        <button className="btn-main" onClick={userLogout}>Logout</button>
+        <button className="btn btn-primary rounded-pill" onClick={logoutHandler}>Logout</button>
       </li>
     </ul>
   );

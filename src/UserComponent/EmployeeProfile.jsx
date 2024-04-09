@@ -21,6 +21,7 @@ const EmployeeProfile = () => {
   }
 
   const employee_jwtToken = sessionStorage.getItem("employee-jwtToken");
+  console.log("user progfif",employee_jwtToken)
 
   const [showSkillModal, setShowSkillModal] = useState(false);
 
@@ -431,7 +432,7 @@ const EmployeeProfile = () => {
                   "http://localhost:8080/api/user/" +
                   employee.userProfile.profilePic
                 }
-                alt=""
+                alt="img-user"
                 className="img-fluid"
               />
             </div>

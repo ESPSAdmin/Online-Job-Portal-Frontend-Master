@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddCategoryForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
-  const admin_jwtToken = sessionStorage.getItem("admin-jwtToken");
-
-  let navigate = useNavigate();
+  const admin_jwtToken = sessionStorage.getItem("jwtToken");
 
   const saveCategory = (e) => {
     let data = { name, description };
@@ -36,7 +33,7 @@ const AddCategoryForm = () => {
             });
 
             setTimeout(() => {
-              navigate("/home");
+              window.location.reload(true);
             }, 2000); // Redirect after 3 seconds
           } else if (!res.success) {
             toast.error(res.responseMessage, {
@@ -86,67 +83,34 @@ const AddCategoryForm = () => {
   };
 
   return (
-    <div>
-      <div class="mt-2 d-flex aligns-items-center justify-content-center">
-        <div class="form-card border-color" style={{ width: "25rem" }}>
-          <div className="container-fluid">
-            <div
-              className="card-header bg-color custom-bg-text mt-2 d-flex justify-content-center align-items-center"
-              style={{
-                borderRadius: "1em",
-                height: "38px",
-              }}
-            >
-              <h5 class="card-title">Add Job Category</h5>
-            </div>
-            <div class="card-body text-color mt-3">
-              <form>
-                <div class="mb-3">
-                  <label for="title" class="form-label">
-                    <b>Category Title</b>
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="title"
-                    placeholder="enter title.."
+    <div className="col-lg py-3">
+      <h5 className="card-title">Add Job Category</h5>
+      <div className="card-body text-color mt-3">
+        <form className="row">
+            <div className="col-lg">
+                  <label for="title" className="semi-bold"> Category Title </label>
+                  <input type="text" className="form-control" id="title" placeholder="enter title.."
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
                     value={name}
                   />
-                </div>
-                <div class="mb-3">
-                  <label for="description" class="form-label">
-                    <b>Category Description</b>
-                  </label>
-                  <textarea
-                    class="form-control"
-                    id="description"
-                    rows="3"
-                    placeholder="enter description.."
+            </div>
+            <div className="col-lg">
+                  <label for="description" className="semi-bold"> Category Description</label>
+                  <textarea className="form-control" id="description" rows="3" placeholder="enter description.."
                     onChange={(e) => {
                       setDescription(e.target.value);
                     }}
                     value={description}
                   />
-                </div>
-
-                <div className="d-flex aligns-items-center justify-content-center mb-2">
-                  <button
-                    type="submit"
-                    onClick={saveCategory}
-                    class="btn bg-color custom-bg-text"
-                  >
+            </div>
+            <div className="col-lg">
+                  <button onClick={saveCategory} className="btn-main mt-4">
                     Add Job Category
                   </button>
-                </div>
-
-                <ToastContainer />
-              </form>
             </div>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
   );

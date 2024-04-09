@@ -1,103 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import JobCard from "../JobComponent/JobCard";
+import { useJobContext } from "../context";
+import { fetchJobByData } from "../api/ApiService";
 
 const HomePage = () => {
-  const [allJobs, setAllJobs] = useState([
-    {
-      id: "",
-      employer: {
-        id: "",
-        firstName: "",
-        lastName: "",
-        emailId: "",
-        phoneNo: "",
-        role: "",
-        address: {
-          id: "",
-          street: "",
-          city: "",
-          pincode: "",
-          state: "",
-          country: "",
-        },
-        registrationDate: "",
-        status: "",
-      },
-      title: "",
-      description: "",
-      category: {
-        id: "",
-        name: "",
-        description: "",
-        status: "",
-      },
-      companyName: "",
-      companyLogo: "",
-      address: {
-        id: "",
-        street: "",
-        city: "",
-        pincode: "",
-        state: "",
-        country: "",
-      },
-      jobType: "",
-      salaryRange: "",
-      experienceLevel: "",
-      requiredSkills: "",
-      status: "",
-      datePosted: "",
-      applicationCount: "",
-    },
-  ]);
-
+  const {allJobData, jobType, jobSalaryRange, allJobCategories } = useJobContext();
+  const [allJobs, setAllJobs] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [jobTypes, setJobTypes] = useState([]);
+  const [salaryRange, setSalaryRange] = useState([]);
   const [searchData, setSearchData] = useState({
     categoryId: "",
     jobType: "",
     salaryRange: "",
   });
-
   const [tempSearchData, setTempSearchData] = useState({
     categoryId: "",
     jobType: "",
     salaryRange: "",
   });
-
-  const [categories, setCategories] = useState([]);
-
-  const [jobTypes, setJobTypes] = useState([]);
-  const [salaryRange, setSalaryRange] = useState([]);
+  
 
   const handleUserInput = (e) => {
     setTempSearchData({ ...tempSearchData, [e.target.name]: e.target.value });
   };
 
-  const retrieveAllCategories = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/job/category/fetch/all"
-    );
-    return response.data;
-  };
-  const retrieveAllJobTypes = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/helper/job/type/fetch/all"
-    );
-    return response.data;
-  };
-  const retrieveAllSalary = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/helper/job/salary/range/fetch/all"
-    );
-    return response.data;
-  };
-
   useEffect(() => {
-    const getAllJobs = async () => {
-      const allJobs = await retrieveAllJobs();
-      if (allJobs) {
-        setAllJobs(allJobs.jobs);
-      }
+    const getAllJobs = () => {
+      setAllJobs(allJobData);
     };
 
     const getSearchedJobs = async () => {
@@ -107,25 +38,16 @@ const HomePage = () => {
       }
     };
 
-    const getAllCategories = async () => {
-      const resCategory = await retrieveAllCategories();
-      if (resCategory) {
-        setCategories(resCategory.categories);
-      }
+    const getAllCategories = () => {
+      setCategories(allJobCategories);
     };
 
-    const getAllJobTypes = async () => {
-      const res = await retrieveAllJobTypes();
-      if (res) {
-        setJobTypes(res);
-      }
+    const getAllJobTypes = () => {
+      setJobTypes(jobType);
     };
 
-    const getAllSalaryRange = async () => {
-      const res = await retrieveAllSalary();
-      if (res) {
-        setSalaryRange(res);
-      }
+    const getAllSalaryRange = () => {
+      setSalaryRange(jobSalaryRange);
     };
 
     if (
@@ -137,27 +59,20 @@ const HomePage = () => {
     } else {
       getAllJobs();
     }
-
     getAllJobTypes();
     getAllSalaryRange();
     getAllCategories();
-  }, [searchData]);
-
-  const retrieveAllJobs = async () => {
-    const response = await axios.get("http://localhost:8080/api/job/fetch/all");
-    console.log(response.data);
-    return response.data;
-  };
+  }, [searchData, allJobData]);
 
   const searchJobsByData = async () => {
     const response = await axios.get(
-      "http://localhost:8080/api/job/search?categoryId=" +
+        fetchJobByData +
         searchData.categoryId +
         "&jobType=" +
         searchData.jobType +
         "&salaryRange=" +
         searchData.salaryRange
-    );
+    );  
     console.log(response.data);
     return response.data;
   };
@@ -221,7 +136,7 @@ const HomePage = () => {
             </div>
 
             <div className="col-auto">
-              <button type="submit" className="btn-main" onClick={searchJob}>
+              <button type="submit" className="btn btn-primary rounded-pill border border-light" onClick={searchJob}>
                 Search
               </button>
             </div>

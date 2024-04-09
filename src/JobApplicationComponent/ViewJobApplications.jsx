@@ -155,7 +155,7 @@ const ViewJobApplications = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          //    Authorization: "Bearer " + jwtToken,
+             Authorization: "Bearer " + employer_jwtToken,
         },
         body: JSON.stringify(putData),
       })

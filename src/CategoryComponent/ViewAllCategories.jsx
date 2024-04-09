@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import AddCategoryForm from "./AddCategoryForm";
 
 const ViewAllCategories = () => {
   const [allCategories, setAllCategories] = useState([]);
@@ -95,65 +96,48 @@ const ViewAllCategories = () => {
   };
 
   return (
-    <div className="mt-3">
-      <div
-        className="card form-card ms-2 me-2 mb-5 shadow-lg"
-        style={{
-          height: "45rem",
-        }}
-      >
-        <div
-          className="card-header custom-bg-text text-center bg-color"
-          style={{
-            borderRadius: "1em",
-            height: "50px",
-          }}
-        >
-          <h2>All Job Categories</h2>
+    <div className="container-fluid">
+      <div className="container-sm">
+        <AddCategoryForm />
+      </div>
+      <div  className="container-sm">
+        <div className="row pt-3">
+          <h6>See List</h6>
         </div>
-        <div
-          className="card-body"
-          style={{
-            overflowY: "auto",
-          }}
-        >
+        <div className="card-body">
           <div className="table-responsive">
-            <table className="table table-hover text-color text-center">
-              <thead className="table-bordered border-color bg-color custom-bg-text">
+            <table className="table">
+              <thead className="bg-secondary-subtle">
                 <tr>
-                  <th scope="col">Category Id</th>
-                  <th scope="col">Category Name</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Action</th>
+                  <th className="semi-bold">Category Id</th>
+                  <th className="semi-bold">Category Name</th>
+                  <th className="semi-bold">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {allCategories.map((category) => {
                   return (
                     <tr>
-                      <td>
-                        <b>{category.id}</b>
+                      <td className="semi-bold">
+                        {category.id}
                       </td>
-                      <td>
-                        <b>{category.name}</b>
+                      <td className="semi-bold">
+                        {category.name}
                       </td>
-                      <td>
-                        <b>{category.description}</b>
-                      </td>
-                      <td>
-                        <button
+                      <td className="d-flex gap-2">
+                        <Link
                           onClick={() => updateCategory(category)}
-                          className="btn btn-sm bg-color custom-bg-text ms-2"
+                          className="nav-link text-primary"
                         >
                           Update
-                        </button>
+                        </Link>
 
-                        <button
+                        <Link
                           onClick={() => deleteCategory(category.id)}
-                          className="btn btn-sm bg-color custom-bg-text ms-2"
+                          className="nav-link text-primary"
                         >
                           Delete
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   );
